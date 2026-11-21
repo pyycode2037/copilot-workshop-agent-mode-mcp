@@ -1,4 +1,5 @@
 :root {
+  color-scheme: light;
   --color-page: #f3f5f9;
   --color-card: #ffffff;
   --color-item: #f7f8fb;
@@ -7,8 +8,28 @@
   --color-border: #e2e6ee;
   --color-primary: #5478e8;
   --color-primary-hover: #3f63d0;
+  --color-on-primary: #ffffff;
   --color-danger: #d65b64;
+  --color-danger-hover: rgb(214 91 100 / 10%);
+  --color-focus: rgb(84 120 232 / 35%);
   --shadow-card: 0 12px 36px rgb(34 48 73 / 10%);
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --color-page: #151922;
+  --color-card: #202633;
+  --color-item: #282f3e;
+  --color-text: #e8ecf3;
+  --color-muted: #a0a9b8;
+  --color-border: #394354;
+  --color-primary: #7897f5;
+  --color-primary-hover: #91a9fa;
+  --color-on-primary: #151922;
+  --color-danger: #f18b91;
+  --color-danger-hover: rgb(241 139 145 / 14%);
+  --color-focus: rgb(120 151 245 / 45%);
+  --shadow-card: 0 12px 36px rgb(0 0 0 / 28%);
 }
 
 * {
@@ -37,10 +58,34 @@ body {
   box-shadow: var(--shadow-card);
 }
 
+.app-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
 h1 {
-  margin: 0 0 24px;
+  margin: 0;
   font-size: 1.6rem;
-  text-align: center;
+}
+
+.btn-theme {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  flex: 0 0 auto;
+  padding: 8px 11px;
+  color: var(--color-text);
+  background: var(--color-item);
+  border: 1px solid var(--color-border);
+  border-radius: 9px;
+  font-size: 0.9rem;
+}
+
+.btn-theme:hover {
+  border-color: var(--color-primary);
 }
 
 .todo-form {
@@ -62,7 +107,7 @@ h1 {
 
 .todo-form input:focus-visible,
 button:focus-visible {
-  outline: 3px solid rgb(84 120 232 / 35%);
+  outline: 3px solid var(--color-focus);
   outline-offset: 2px;
 }
 
@@ -73,7 +118,7 @@ button {
 
 .btn-add {
   padding: 0 18px;
-  color: #ffffff;
+  color: var(--color-on-primary);
   background: var(--color-primary);
   border: 0;
   border-radius: 9px;
@@ -82,6 +127,32 @@ button {
 
 .btn-add:hover {
   background: var(--color-primary-hover);
+}
+
+.filters {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.btn-filter {
+  flex: 1;
+  padding: 8px 10px;
+  color: var(--color-muted);
+  background: var(--color-item);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+}
+
+.btn-filter:hover {
+  color: var(--color-text);
+}
+
+.btn-filter.is-active {
+  color: var(--color-on-primary);
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+  font-weight: 600;
 }
 
 .todo-list {
@@ -133,7 +204,7 @@ button {
 }
 
 .btn-delete:hover {
-  background: rgb(214 91 100 / 10%);
+  background: var(--color-danger-hover);
 }
 
 .empty-state {
@@ -173,5 +244,14 @@ button {
 
   .app {
     padding: 22px 18px;
+  }
+
+  .app-header {
+    align-items: flex-start;
+  }
+
+  .btn-theme {
+    padding: 7px 9px;
+    font-size: 0.82rem;
   }
 }
