@@ -1,5 +1,6 @@
 const STORAGE_KEY = 'my-todo-list';
 const THEME_KEY = 'my-todo-list-theme';
+const FILTER_KEY = 'my-todo-list-filter';
 
 const form = document.getElementById('todo-form');
 const input = document.getElementById('todo-input');
@@ -15,7 +16,8 @@ const colorScheme = window.matchMedia('(prefers-color-scheme: dark)');
 // 從瀏覽器儲存空間載入待辦事項。
 const savedTodos = localStorage.getItem(STORAGE_KEY);
 let todos = savedTodos ? JSON.parse(savedTodos) : [];
-let currentFilter = 'all';
+const savedFilter = localStorage.getItem(FILTER_KEY);
+let currentFilter = ['all', 'active', 'completed'].includes(savedFilter) ? savedFilter : 'all';
 let hasManualTheme = false;
 
 // 儲存目前清單並更新頁面。
@@ -63,9 +65,9 @@ function render() {
   if (todos.length === 0) {
     emptyState.textContent = '還沒有任何待辦事項,新增一個吧!';
   } else if (currentFilter === 'active') {
-    emptyState.textContent = '沒有未完成的待辦事項。';
+    emptyState.textContent = '目前沒有未完成的事項；已完成的項目仍保留在清單中，切換至「全部」或「已完成」即可查看。';
   } else if (currentFilter === 'completed') {
-    emptyState.textContent = '還沒有已完成的待辦事項。';
+    emptyState.textContent = '目前沒有已完成的事項；未完成的項目仍保留在清單中，切換至「全部」或「未完成」即可查看。';
   }
 
   filterButtons.forEach((button) => {
@@ -120,6 +122,7 @@ themeToggle.addEventListener('click', () => {
 filterButtons.forEach((button) => {
   button.addEventListener('click', () => {
     currentFilter = button.dataset.filter;
+    localStorage.setItem(FILTER_KEY, currentFilter);
     render();
   });
 });
